@@ -24,6 +24,10 @@ func LoadConfig() *Type {
 		if err != nil {
 			panic(err)
 		}
+		err = yaml.Unmarshal(reader, &config.Record)
+		if err != nil {
+			panic(err)
+		}
 		return config
 	}
 	return config
