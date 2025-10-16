@@ -16,4 +16,7 @@ type Logger interface {
 
 	// Error 记录错误级别日志
 	Error(in map[string]any) bool
+
+	// Fatal 记录致命错误日志并终止程序
+	Fatal(in map[string]any) bool
 }

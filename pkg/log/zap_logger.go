@@ -47,6 +47,11 @@ func Error(in map[string]any) bool {
 	return GetLogger().Error(in)
 }
 
+// Fatal 记录致命错误日志并终止程序
+func Fatal(in map[string]any) bool {
+	return GetLogger().Fatal(in)
+}
+
 type ZapLogger struct {
 	logger *zap.Logger
 }
@@ -162,6 +167,14 @@ func (z *ZapLogger) Warn(in map[string]any) bool {
 func (z *ZapLogger) Error(in map[string]any) bool {
 	fields := mapToFields(in)
 	z.logger.Error("", fields...)
+	return true
+}
+
+// Fatal 记录致命错误日志并终止程序
+func (z *ZapLogger) Fatal(in map[string]any) bool {
+	fields := mapToFields(in)
+	z.logger.Fatal("", fields...)
+	// 不会执行到这里，因为Fatal会终止程序
 	return true
 }
 
