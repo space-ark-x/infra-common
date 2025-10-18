@@ -3,7 +3,7 @@ package intf
 type IService interface {
 	Init(IModule)
 	GetName() string
-	Module() IModule
+	Module() *IModule
 }
 
 type CoreService struct {
