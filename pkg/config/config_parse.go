@@ -11,7 +11,9 @@ func LoadConfig() *Type {
 	env := os.Getenv("Env")
 	configInject := os.Getenv("ConfigInject")
 	injectMode := configInject == "true"
-	var config *Type
+	config := &Type{
+		Record: Record{},
+	}
 	if !injectMode {
 		if env == "" {
 			panic("env variable not set")

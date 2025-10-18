@@ -15,7 +15,7 @@ type Type struct {
 
 	Mongo    bool   `yaml:"MONGO"`
 	MongoDsn string `yaml:"MONGO_DSN"`
-	Record
+	Record   Record
 }
 
 func (t *Type) Get(record string, defaultValue string) string {
