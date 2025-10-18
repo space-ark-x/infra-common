@@ -4,17 +4,17 @@ import (
 	"github.com/space-ark-z/infra-common/pkg/config"
 )
 
-var app_ver *ver
+var appVer *Ver
 
 type SetupAppArgs struct {
 }
 
 func SetupApp() {
-	app_ver = newVer()
-	app_ver.Config = config.LoadConfig()
+	appVer = newVer()
+	appVer.Config = config.LoadConfig()
 }
 
 // GetAppVer 获取应用版本信息
-func GetAppVer() *ver {
-	return app_ver
+func GetAppVer() *Ver {
+	return appVer
 }

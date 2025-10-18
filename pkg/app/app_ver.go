@@ -2,10 +2,10 @@ package app
 
 import "github.com/space-ark-z/infra-common/pkg/config"
 
-func newVer() *ver {
-	return &ver{}
+func newVer() *Ver {
+	return &Ver{}
 }
 
-type ver struct {
+type Ver struct {
 	Config *config.Type
 }

@@ -174,7 +174,7 @@ func (z *ZapLogger) Error(in map[string]any) bool {
 func (z *ZapLogger) Fatal(in map[string]any) bool {
 	fields := mapToFields(in)
 	z.logger.Fatal("", fields...)
-	// 不会执行到这里，因为Fatal会终止程序
+	panic(fmt.Sprintf("fatal error: %v", in))
 	return true
 }
 
