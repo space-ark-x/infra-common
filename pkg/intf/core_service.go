@@ -1,10 +1,12 @@
 package intf
 
 type IService interface {
-	Init(IModule)
+	Init(*IModule)
 	GetName() string
 	Module() *IModule
 }
+
+var _ IService = (*CoreService)(nil)
 
 type CoreService struct {
 	Name string

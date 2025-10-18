@@ -5,8 +5,10 @@ import "github.com/kataras/iris/v12"
 type IController interface {
 	Build(app *iris.Application)
 	GetName() string
-	Init(mo IModule)
+	Init(mo *IModule)
 }
+
+var _ IController = (*CoreController)(nil)
 
 type CoreController struct {
 	Mo   *IModule
