@@ -3,7 +3,7 @@ package intf
 import "github.com/kataras/iris/v12"
 
 type IController interface {
-	BuildRouter(app *iris.Application)
+	Build(app *iris.Application)
 	GetName() string
 	Init(mo IModule)
 }
