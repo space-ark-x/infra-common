@@ -6,7 +6,7 @@ import (
 
 type IModule interface {
 	Name() string
-	BuildRouter(app *iris.Application, mo IModule)
+	Build(app *iris.Application, mo IModule)
 	GetService(s IService) (IService, bool)
 	AddSubModule(IModule)
 	AddController(con IController)
@@ -29,9 +29,9 @@ func NewModule(name string) IModule {
 	}
 }
 
-func (m *CoreModule) BuildRouter(app *iris.Application, mo IModule) {
+func (m *CoreModule) Build(app *iris.Application, mo IModule) {
 	for _, module := range m.mList {
-		module.BuildRouter(app, m)
+		module.Build(app, m)
 	}
 	for _, controller := range m.cList {
 		controller.Build(app)
