@@ -1,7 +1,7 @@
 package intf
 
 type IService interface {
-	Init(IModule)
+	Init(*IModule)
 	GetName() string
 	Module() *IModule
 }
