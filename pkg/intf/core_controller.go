@@ -1,0 +1,26 @@
+package intf
+
+import "github.com/kataras/iris/v12"
+
+type IController interface {
+	BuildRouter(app *iris.Application)
+	GetName() string
+	Init(mo IModule)
+}
+
+type CoreController struct {
+	Mo   IModule
+	Name string
+}
+
+func (c *CoreController) BuildRouter(app *iris.Application) {
+
+}
+
+func (c *CoreController) GetName() string {
+	return c.Name
+}
+
+func (c *CoreController) Init(mo IModule) {
+	c.Mo = mo
+}
