@@ -1,6 +1,8 @@
 package intf
 
 import (
+	"unsafe"
+
 	"github.com/kataras/iris/v12"
 )
 
@@ -50,7 +52,7 @@ func (m *CoreModule) GetService(sName string) (any, bool) {
 func (m *CoreModule) AddController(con *IController) {
 	_, ok := m.cList[(*con).GetName()]
 	if !ok {
-		(*con).Init(m)
+		(*con).Init((*IModule)(unsafe.Pointer(m)))
 		m.cList[(*con).GetName()] = con
 		return
 	}
@@ -60,7 +62,7 @@ func (m *CoreModule) AddController(con *IController) {
 func (m *CoreModule) AddService(s *IService) {
 	_, ok := m.sList[(*s).GetName()]
 	if !ok {
-		(*s).Init(m)
+		(*s).Init((*IModule)(unsafe.Pointer(m)))
 		m.sList[(*s).GetName()] = s
 		return
 	}
