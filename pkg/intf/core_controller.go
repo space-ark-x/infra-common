@@ -13,7 +13,7 @@ type CoreController struct {
 	Name string
 }
 
-func (c *CoreController) BuildRouter(app *iris.Application) {
+func (c *CoreController) Build(app *iris.Application) {
 
 }
 
