@@ -7,7 +7,7 @@ import (
 type IModule interface {
 	Name() string
 	Build(app *iris.Application, mo IModule)
-	GetService(s IService) (IService, bool)
+	GetService(sName string) (any, bool)
 	AddSubModule(IModule)
 	AddController(con IController)
 	AddService(s IService)
@@ -42,8 +42,8 @@ func (m *CoreModule) Name() string {
 	return m.name
 }
 
-func (m *CoreModule) GetService(s IService) (IService, bool) {
-	service, ok := m.sList[s.GetName()]
+func (m *CoreModule) GetService(sName string) (any, bool) {
+	service, ok := m.sList[sName]
 	return service, ok
 }
 
