@@ -34,7 +34,7 @@ func (m *CoreModule) BuildRouter(app *iris.Application, mo IModule) {
 		module.BuildRouter(app, m)
 	}
 	for _, controller := range m.cList {
-		controller.BuildRouter(app)
+		controller.Build(app)
 	}
 }
 
