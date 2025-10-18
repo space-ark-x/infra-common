@@ -8,11 +8,11 @@ type IService interface {
 
 type CoreService struct {
 	Name string
-	mo   IModule
+	Mo   IModule
 }
 
 func (s *CoreService) Init(mo IModule) {
-	s.mo = mo
+	s.Mo = mo
 }
 
 func (s *CoreService) GetName() string {
@@ -20,5 +20,5 @@ func (s *CoreService) GetName() string {
 }
 
 func (s *CoreService) Module() *IModule {
-	return &s.mo
+	return &s.Mo
 }
