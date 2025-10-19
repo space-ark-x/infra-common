@@ -8,6 +8,6 @@ type Response struct {
 }
 
 type ListResponse struct {
-	List  []any `json:"list"`
+	List  any   `json:"list"`
 	Total int64 `json:"total"`
 }
