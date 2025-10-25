@@ -104,6 +104,42 @@ func TestNewQueryRequestFromURL(t *testing.T) {
 			},
 		},
 		{
+			name:  "in condition with single value",
+			query: "status_in=active",
+			expected: &QueryRequest{
+				Page:     1,
+				PageSize: 10,
+				Condition: []Condition{
+					{Key: "status", Value: []string{"active"}, Op: In},
+				},
+				Order: []Order{},
+			},
+		},
+		{
+			name:  "in condition with multiple values",
+			query: "status_in=active,inactive,pending",
+			expected: &QueryRequest{
+				Page:     1,
+				PageSize: 10,
+				Condition: []Condition{
+					{Key: "status", Value: []string{"active", "inactive", "pending"}, Op: In},
+				},
+				Order: []Order{},
+			},
+		},
+		{
+			name:  "or condition",
+			query: "category_or=electronics",
+			expected: &QueryRequest{
+				Page:     1,
+				PageSize: 10,
+				Condition: []Condition{
+					{Key: "category", Value: "electronics", Op: Or},
+				},
+				Order: []Order{},
+			},
+		},
+		{
 			name:  "multiple conditions",
 			query: "age_gte=18&age_lt=60&name=admin",
 			expected: &QueryRequest{
@@ -249,6 +285,22 @@ func TestParseCondition(t *testing.T) {
 				Op:  LessOrEqual,
 			},
 		},
+		{
+			name: "parse in condition",
+			key:  "status_in",
+			expected: &Condition{
+				Key: "status",
+				Op:  In,
+			},
+		},
+		{
+			name: "parse or condition",
+			key:  "category_or",
+			expected: &Condition{
+				Key: "category",
+				Op:  Or,
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -271,8 +323,8 @@ func TestParseOrder(t *testing.T) {
 		expected []Order
 	}{
 		{
-			name:    "empty sort string",
-			sortStr: "",
+			name:     "empty sort string",
+			sortStr:  "",
 			expected: []Order{},
 		},
 		{
@@ -299,8 +351,8 @@ func TestParseOrder(t *testing.T) {
 			},
 		},
 		{
-			name:    "invalid order direction",
-			sortStr: "name.invalid",
+			name:     "invalid order direction",
+			sortStr:  "name.invalid",
 			expected: []Order{},
 		},
 		{

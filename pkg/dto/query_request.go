@@ -10,12 +10,14 @@ import (
 type Operator string
 
 const (
-	Equal          Operator = "eq"   // 等于
-	NotEqual       Operator = "ne"   // 不等于
-	Greater        Operator = "gt"   // 大于
-	Less           Operator = "lt"   // 小于
-	GreaterOrEqual Operator = "gte"  // 大于等于
-	LessOrEqual    Operator = "lte"  // 小于等于
+	Equal          Operator = "eq"  // 等于
+	NotEqual       Operator = "ne"  // 不等于
+	Greater        Operator = "gt"  // 大于
+	Less           Operator = "lt"  // 小于
+	GreaterOrEqual Operator = "gte" // 大于等于
+	LessOrEqual    Operator = "lte" // 小于等于
+	In             Operator = "in"  // IN操作符
+	Or             Operator = "or"  // OR操作符
 )
 
 // OrderDirection 排序方向
@@ -51,7 +53,7 @@ type QueryRequest struct {
 func NewQueryRequestFromURL(rawQuery string) *QueryRequest {
 	// 解析查询字符串但保留顺序
 	query, _ := url.ParseQuery(rawQuery)
-	
+
 	qr := &QueryRequest{
 		Page:      1,
 		PageSize:  10,
@@ -102,11 +104,11 @@ func parseConditions(rawQuery string, qr *QueryRequest) {
 		if pair == "" {
 			continue
 		}
-		
+
 		// 分割键和值
 		kv := strings.SplitN(pair, "=", 2)
 		key := kv[0]
-		
+
 		// 跳过特殊参数
 		if key == "page" || key == "page_size" || key == "sort" {
 			continue
@@ -122,6 +124,17 @@ func parseConditions(rawQuery string, qr *QueryRequest) {
 					value = kv[1]
 				}
 				condition.Value = value
+
+				// 对于IN操作符，需要特殊处理值为数组的情况
+				if condition.Op == In {
+					// 处理逗号分隔的值作为数组
+					if str, ok := condition.Value.(string); ok && strings.Contains(str, ",") {
+						condition.Value = strings.Split(str, ",")
+					} else {
+						// 单个值也转换为数组
+						condition.Value = []string{condition.Value.(string)}
+					}
+				}
 			}
 			qr.Condition = append(qr.Condition, *condition)
 		}
@@ -140,8 +153,8 @@ func parseSort(query url.Values, qr *QueryRequest) {
 // parseCondition 解析条件字段
 func parseCondition(key string) *Condition {
 	// 查找操作符
-	operators := []Operator{GreaterOrEqual, LessOrEqual, Equal, NotEqual, Greater, Less}
-	
+	operators := []Operator{GreaterOrEqual, LessOrEqual, Equal, NotEqual, Greater, Less, In, Or}
+
 	for _, op := range operators {
 		suffix := "_" + string(op)
 		if len(key) > len(suffix) && key[len(key)-len(suffix):] == suffix {
@@ -152,7 +165,7 @@ func parseCondition(key string) *Condition {
 			}
 		}
 	}
-	
+
 	// 默认为相等条件
 	return &Condition{
 		Key: key,
@@ -163,7 +176,7 @@ func parseCondition(key string) *Condition {
 // parseOrder 解析排序字段
 func parseOrder(sortStr string) []Order {
 	orders := make([]Order, 0)
-	
+
 	// 支持格式: key1.asc,key2.desc
 	pairs := strings.Split(sortStr, ",")
 	for _, pair := range pairs {
@@ -172,7 +185,7 @@ func parseOrder(sortStr string) []Order {
 			order := Order{
 				Key: parts[0],
 			}
-			
+
 			switch parts[1] {
 			case "asc":
 				order.Direction = Ascending
@@ -181,10 +194,10 @@ func parseOrder(sortStr string) []Order {
 			default:
 				continue // 无效的排序方向
 			}
-			
+
 			orders = append(orders, order)
 		}
 	}
-	
+
 	return orders
 }
