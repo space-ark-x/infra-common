@@ -57,7 +57,7 @@ type ZapLogger struct {
 }
 
 // NewZapLogger 创建一个新的ZapLogger实例
-// 日志将根据PID和时间戳写入./log/目录下
+// 日志将根据时间戳写入./log/目录下
 func NewZapLogger() Logger {
 	// 确保log目录存在
 	logDir := "log"
@@ -65,12 +65,9 @@ func NewZapLogger() Logger {
 		panic(fmt.Sprintf("failed to create log directory: %v", err))
 	}
 
-	// 获取当前进程PID
-	pid := os.Getpid()
-
-	// 生成基于时间戳和PID的文件名
+	// 生成基于时间戳的文件名
 	timestamp := time.Now().Format("2006-01-02_15-04-05")
-	filename := filepath.Join(logDir, fmt.Sprintf("log_%s_%d.log", timestamp, pid))
+	filename := filepath.Join(logDir, fmt.Sprintf("log_%s.log", timestamp))
 
 	// 配置zap日志
 	encoderConfig := zap.NewProductionEncoderConfig()
@@ -108,12 +105,9 @@ func NewZapLoggerWithModule(moduleName string) Logger {
 		panic(fmt.Sprintf("failed to create log directory: %v", err))
 	}
 
-	// 获取当前进程PID
-	pid := os.Getpid()
-
 	// 生成基于时间戳和PID的文件名
 	timestamp := time.Now().Format("2006-01-02_15-04-05")
-	filename := filepath.Join(logDir, fmt.Sprintf("log_%s_%d_%s.log", timestamp, pid, moduleName))
+	filename := filepath.Join(logDir, fmt.Sprintf("log_%s_%s.log", timestamp, moduleName))
 
 	// 配置zap日志
 	encoderConfig := zap.NewProductionEncoderConfig()
