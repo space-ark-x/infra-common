@@ -154,6 +154,18 @@ func TestNewQueryRequestFromURL(t *testing.T) {
 			},
 		},
 		{
+			name:  "single like find",
+			query: "name_like=shanghai",
+			expected: &QueryRequest{
+				Condition: []Condition{
+					{Key: "name", Value: "shanghai", Op: Like},
+				},
+				Page:     1,
+				PageSize: 10,
+				Order:    []Order{},
+			},
+		},
+		{
 			name:  "single ascending order",
 			query: "sort=name.asc",
 			expected: &QueryRequest{

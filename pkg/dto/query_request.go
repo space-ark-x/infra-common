@@ -18,6 +18,7 @@ const (
 	LessOrEqual    Operator = "lte" // 小于等于
 	In             Operator = "in"  // IN操作符
 	Or             Operator = "or"  // OR操作符
+	Like           Operator = "like"
 )
 
 // OrderDirection 排序方向
@@ -153,7 +154,7 @@ func parseSort(query url.Values, qr *QueryRequest) {
 // parseCondition 解析条件字段
 func parseCondition(key string) *Condition {
 	// 查找操作符
-	operators := []Operator{GreaterOrEqual, LessOrEqual, Equal, NotEqual, Greater, Less, In, Or}
+	operators := []Operator{GreaterOrEqual, LessOrEqual, Equal, NotEqual, Greater, Less, In, Or, Like}
 
 	for _, op := range operators {
 		suffix := "_" + string(op)
