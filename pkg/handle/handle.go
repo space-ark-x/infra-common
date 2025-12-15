@@ -1,4 +1,4 @@
-package err
+package handle
 
 import "github.com/space-ark-z/infra-common/pkg/log"
 
