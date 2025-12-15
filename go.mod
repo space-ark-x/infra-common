@@ -1,4 +1,4 @@
-module github.com/space-ark-z/infra-common
+module github.com/space-ark-x/infra-common
 
 go 1.25.0
 

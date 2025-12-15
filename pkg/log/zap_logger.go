@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/space-ark-z/infra-common/pkg/config"
+	"github.com/space-ark-x/infra-common/pkg/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -180,7 +180,6 @@ func (z *ZapLogger) Fatal(in map[string]any) bool {
 	fields := mapToFields(in)
 	z.logger.Fatal("", fields...)
 	panic(fmt.Sprintf("fatal error: %v", in))
-	return true
 }
 
 // mapToFields 将map转换为zap字段

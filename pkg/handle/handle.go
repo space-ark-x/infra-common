@@ -1,8 +1,8 @@
 package handle
 
-import "github.com/space-ark-z/infra-common/pkg/log"
+import "github.com/space-ark-x/infra-common/pkg/log"
 
-func Handle(err error) {
+func Default(err error) {
 	if err != nil {
 		log.Error(map[string]any{
 			"error": err,
