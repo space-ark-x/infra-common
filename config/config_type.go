@@ -2,8 +2,6 @@ package config
 
 import "os"
 
-type Record map[string]string
-
 type Type struct {
 	AppName     string `yaml:"APP_NAME"`
 	AppPort     int    `yaml:"APP_PORT"`
@@ -15,7 +13,7 @@ type Type struct {
 
 	Mongo    bool   `yaml:"MONGO"`
 	MongoDsn string `yaml:"MONGO_DSN"`
-	Record   Record
+	Record   map[string]string
 	env      string
 }
 

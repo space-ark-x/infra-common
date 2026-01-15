@@ -8,7 +8,7 @@ import (
 )
 
 var config = &Type{
-	Record: Record{},
+	Record: map[string]string{},
 }
 
 func LoadConfig() *Type {
