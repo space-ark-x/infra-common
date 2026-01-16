@@ -1,13 +1,13 @@
 package dto
 
-type Response struct {
+type Response[T any] struct {
 	Err  bool   `json:"err"`
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
-	Data any    `json:"data"`
+	Data T      `json:"data"`
 }
 
-type ListResponse struct {
-	List  any   `json:"list"`
+type ListResponse[T any] struct {
+	List  []T   `json:"list"`
 	Total int64 `json:"total"`
 }
