@@ -102,7 +102,7 @@ func NewZapLoggerWithConfig(moduleName string, consoleOutput bool) Logger {
 	}
 
 	// 生成基于时间戳的文件名
-	timestamp := time.Now().Format("2006-01-02_15-04-05")
+	timestamp := time.Now().Format("2006-01-02")
 	var filename string
 	if moduleName == "default" {
 		filename = filepath.Join(logDir, fmt.Sprintf("log_%s.log", timestamp))
